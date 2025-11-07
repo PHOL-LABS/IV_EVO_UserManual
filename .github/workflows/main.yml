@@ -20,16 +20,16 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: DR_DRNext_User_Manual_mk1_mk2.tex
+          root_file: IV_Indicators_User_Manual.tex
           texlive_version: latest # must be `2024` or later (`latest` chosen by default)
           extra_system_packages: coreutils icu inkscape # `coreutils` for `mktemp`, `icu` for `uconv`
       - name: Upload the artifact
         uses: actions/upload-artifact@v4
         with:
-          name: DR_DRNext_User_Manual_mk1_mk2
+          name: IV_Indicators_User_Manual
           path: |
             README.md
-            DR_DRNext_User_Manual_mk1_mk2.pdf
+            IV_Indicators_User_Manual.pdf
   verify:
     name: Verify PDF/A
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
       - name: Get the PDF file from the artifact
         uses: actions/download-artifact@v4
       - name: Verify the PDF file with VeraPDF
-        run: verify DR_DRNext_User_Manual_mk1_mk2/*.pdf | tee /dev/stderr | grep -qE 'nonCompliant="0" failedJobs="0"'
+        run: verify IV_Indicators_User_Manual/*.pdf | tee /dev/stderr | grep -qE 'nonCompliant="0" failedJobs="0"'
 
   ## inspired by https://github.com/Pseudomanifold/latex-mimosis
   deploy:
@@ -54,7 +54,7 @@ jobs:
         uses: actions/download-artifact@v4
       - name: Commit and push the PDF and README.md to `gh-pages` branch
         run: |
-          cd DR_DRNext_User_Manual_mk1_mk2
+          cd IV_Indicators_User_Manual
           git init -b temp
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com

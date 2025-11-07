@@ -19,16 +19,16 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: DR_DRNext_User_Manual_mk1_mk2_hu.tex
+          root_file: IV_Indicators_User_Manual_hu.tex
           texlive_version: latest
           extra_system_packages: coreutils icu inkscape
       - name: Upload the artifact
         uses: actions/upload-artifact@v4
         with:
-          name: DR_DRNext_User_Manual_mk1_mk2_hu
+          name: IV_Indicators_User_Manual_hu
           path: |
             README.md
-            DR_DRNext_User_Manual_mk1_mk2_hu.pdf
+            IV_Indicators_User_Manual_hu.pdf
   verify:
     name: Verify Hungarian PDF/A
     runs-on: ubuntu-latest
@@ -38,4 +38,4 @@ jobs:
       - name: Get the PDF file from the artifact
         uses: actions/download-artifact@v4
       - name: Verify the PDF file with VeraPDF
-        run: verify DR_DRNext_User_Manual_mk1_mk2_hu/*.pdf | tee /dev/stderr | grep -qE 'nonCompliant="0" failedJobs="0"'
+        run: verify IV_Indicators_User_Manual_hu/*.pdf | tee /dev/stderr | grep -qE 'nonCompliant="0" failedJobs="0"'
