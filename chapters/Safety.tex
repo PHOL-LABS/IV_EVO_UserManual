@@ -1,13 +1,20 @@
 \chapter{Safety notices}\label{ch:safety}
 
-IV-Indicators Nano gauges are intended for professional or enthusiast installations in Volkswagen Group classics. Observe the following practices during installation and use:
+IV-Indicators Nano hardware is sensitive to short circuits and incorrect sensor wiring. Always review the prohibitions in \autoref{ch:precautions} before powering the programmer and keep the following guidelines in mind during installation.
 
+\section{Handling the programmer}
 \begin{itemize}
-    \item Disconnect the vehicle battery before wiring the indicator to prevent shorts while routing harnesses.
-    \item Verify that each sensor connector is properly seated and strain-relieved. Avoid stretching the wires while the indicator is mounted in the dashboard.
-    \item Calibrate the indicator only when the vehicle is stationary. Changes to ranges or colour gradients during driving can distract the driver.
-    \item Protect the programmer and harness from moisture. The electronics are not sealed against liquids.
-    \item Store unused modules in their anti-static packaging and keep them away from conductive debris.
+    \item Treat the programmer as part of the indicator. Never energise it until the pogo connector is fully seated and supported on a non-conductive surface.
+    \item Do not attach or detach the programmer while data is being transmitted. Disconnect the USB cable first and keep the device steady to avoid bending the pins.
+    \item Avoid conductive worktops such as laptop cases, bare metal benches, or vehicle bodywork. Even brief contact can short the pogo pins and permanently damage the electronics.
 \end{itemize}
 
-Warranty coverage is void if the device was powered on a conductive surface, connected with reversed polarity, or used without following the precautions in \autoref{ch:precautions}. Paid replacements can be arranged with PHOL-LABS Kft when damage falls outside warranty conditions.
+\section{Sensor safety}
+\begin{itemize}
+    \item Use the recommended connectors for each preset and provide strain relief on harnesses. The barometer relies on the VAG \texttt{8K0973703} plug, while the boost preset should be paired with a sealed three-pin connector.
+    \item Pair the lambda indicator with a supported wideband controller when monitoring modified engines. Controllers such as SLC Free, DIY-EFI TinyWB, or Sigma Lambda Controller Free~2 translate the Bosch LSU~4.9 probe into a safe analogue voltage for the gauge.
+    \item Confirm that calibration ranges match the installed sensor before driving. Incorrect limits can lead to misleading readings and misdiagnosis.
+\end{itemize}
+
+\section{Warranty note}
+PHOL-LABS Kft does not offer warranty coverage for devices that were powered on conductive surfaces, connected with reversed polarity, or otherwise operated against the rules listed above. Replacement hardware is available, but it is supplied on a paid basis when misuse is detected.

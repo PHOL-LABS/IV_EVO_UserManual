@@ -1,22 +1,71 @@
 \chapter{Configuring with the IV-Conf Android beta}\label{ch:android-config}
 
-An experimental IV-Conf Android application is supplied with each indicator set. Although the app is still in beta, it provides the quickest way to push presets and colour profiles from a phone or tablet.
+An experimental IV-Conf Android application ships with the indicator set. The beta is functional for flashing presets and editing colour schemes, but PHOL-LABS recommends the web pack for mission-critical adjustments.
 
 \section{Connecting the programmer}
 \begin{enumerate}
-    \item Plug the external programmer into the indicator.
-    \item Connect a USB-C cable between the programmer and the Android device. If the phone lacks USB-C, use a powered hub or a USB-A to USB-C adapter.
-    \item Grant USB permissions when prompted by the IV-Conf app.
-    \item Tap \texttt{USB Connect} and wait for the status to show \texttt{Connected}.
+    \item Insert the external programmer into the indicator before attaching any cables.
+    \item Connect the programmer to the Android phone with a USB-C OTG cable. If the handset uses a different connector, place a USB hub or USB-A adapter between the phone and the programmer.
+    \item Launch the IV-Conf beta, confirm the USB permission prompt, and tap \texttt{USB Connect}. Wait until the status reports \texttt{Connected}.
 \end{enumerate}
 
-\section{Selecting presets}
+\section{Loading presets and modes}
 \begin{enumerate}
-    \item Open the menu (three-bar icon) and navigate to the \texttt{Settings} page.
-    \item Choose a preset that matches the physical indicator (for example, Volts, Baro, Thermo, Lambda, or Boost).
-    \item Press \texttt{Set parameters} and wait for the transmission to finish.
-    \item Optionally adjust dot/bar display mode, segment colours, and backlight intensity using the on-screen controls.
+    \item Open the navigation drawer (three-bar icon) and select \texttt{Settings}.
+    \item Choose a preset that matches the physical indicator --- Volts, Baro, Thermo, Lambda, or Boost.
+    \item Tap \texttt{Set parameters} and allow the transmission to complete. The indicator must stay still while data is sent.
+    \item Use the on-screen toggles to switch between dot and bar indication modes and adjust the backlight intensity slider.
 \end{enumerate}
 
-\section{Working with gradients}
-The main view exposes a gradient editor. Select the number of segments (up to four) and pick colours and positions that suit the vehicle interior. Changes are written immediately after pressing \texttt{Set parameters}. Keep the indicator stationary while data is transferring.
+\section{Editing gradients}
+\begin{enumerate}
+    \item Select the gradient style (default: \texttt{Gradient}).
+    \item Choose the number of segments (up to four) and assign colours and transition positions to each segment.
+    \item Press \texttt{Set parameters} again so the updated gradient is written to the indicator.
+\end{enumerate}
+
+\section{Interface overview}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image47.png}
+        \caption{Programmer wiring}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image17.png}
+        \caption{USB permission prompt}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image18.png}
+        \caption{Successful USB connection}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image19.png}
+        \caption{Preset selection}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image20.png}
+        \caption{Mode configuration}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image21.png}
+        \caption{Backlight control}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image23.png}
+        \caption{Gradient editor}
+    \end{subfigure}
+    \caption{Key IV-Conf Android beta screens. The app is provided with the indicator kit for on-the-go adjustments.}
+\end{figure}
+
+\section{Beta limitations}
+The beta application is under active development. Expect interface changes and occasional stability issues; fall back to the web pack if a setting is not applied correctly. Report reproducible bugs directly to PHOL-LABS so firmware and app updates can be aligned.

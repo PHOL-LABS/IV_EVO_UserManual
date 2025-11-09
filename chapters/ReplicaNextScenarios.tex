@@ -1,21 +1,95 @@
 \chapter{Configuring with the IV-Conf web pack}\label{ch:web-config}
 
-The IV-Conf web pack provides a browser-based interface for configuration and firmware updates. Access it at \url{https://phol-labs.com/iv} from a computer equipped with a USB serial bridge.
+The IV-Conf web pack is the primary tool for configuring IV-Indicators Nano hardware. Open \url{https://phol-labs.com/iv} in a Chromium-based browser with Web Serial support and connect the supplied programmer via USB.
 
 \section{Connecting to the indicator}
 \begin{enumerate}
-    \item Open the web page and select the serial port assigned to the programmer.
-    \item Set the baud rate to 115200 in the settings panel.
-    \item Click \texttt{Connect MODBUS} and wait until the interface reports a successful connection with no error indicators.
+    \item Click the serial port icon and select the entry that corresponds to the programmer.
+    \item Open the \texttt{Settings} panel and set the baud rate to 115200.
+    \item Press \texttt{Connect MODBUS}. The status banner should confirm the connection without red error indicators.
 \end{enumerate}
 
-\section{Managing presets}
-Multiple presets are available for each indicator type (for example, \texttt{IV-Volts}, \texttt{IV-Volts-Bar-Multi}, and \texttt{IV-Volts-BarYellow}). After selecting the correct preset:
+\section{Preset catalogue}
+Multiple presets exist for each indicator type. The voltmeter, for example, includes variants with multi-bar graphics or yellow highlights. Select a preset that matches the physical gauge before uploading settings.
 
-\begin{enumerate}
-    \item Press \texttt{Send data} to upload the preset to the indicator.
-    \item Use \texttt{Stop Send Data} to interrupt a transfer if you need to change settings.
-    \item Press \texttt{Get data} to read the current configuration from the indicator before making adjustments.
-\end{enumerate}
+\begin{table}[htbp]
+    \centering
+    \caption{Example voltmeter presets}
+    \label{tab:voltmeter-presets}
+    \begin{tabular}{@{} l l @{}}
+        \toprule
+        Preset name & Description \\
+        \midrule
+        IV-Volts-Bar-Multi & Voltmeter with a multi-bar display.
+        \\
+        IV-Volts-Bar-Multi4 & Four-level multi-bar variant.
+        \\
+        IV-Volts-BarYellow & Bar display with a yellow colour scheme.
+        \\
+        IV-Volts-Bar & Standard bar display.
+        \\
+        IV-Volts & Minimal preset without additional graphics.
+        \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
-In addition to predefined presets, the web pack allows manual adjustment of colour gradients, input ranges, and dot/bar display mode. Always verify that the preset matches the physical indicator before applying changes.
+\section{Uploading and downloading data}
+\begin{itemize}
+    \item Use the \texttt{Send data} button to push the current preset or manual adjustments to the indicator. The transfer completes automatically within 10--15~seconds.
+    \item Click \texttt{Get data} to read the existing configuration from the gauge before editing ranges or colours.
+    \item The \texttt{Stop Send Data} control cancels an in-progress upload if you selected the wrong preset or need to alter parameters.
+\end{itemize}
+
+Manual tuning allows the gradient start/end hue, backlight intensity, and numeric sensor ranges to be adapted for custom hardware. Confirm that every change matches the installed indicator to avoid misleading readings.
+
+\section{Interface overview}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image15.png}
+        \caption{Launching the web pack}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image11.png}
+        \caption{Selecting the serial port}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image1.png}
+        \caption{Granting port access}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image8.png}
+        \caption{Setting the baud rate}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image22.png}
+        \caption{Connecting over MODBUS}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image5.png}
+        \caption{Preset selector}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image3.png}
+        \caption{Manual tuning controls}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image2.png}
+        \caption{Send data confirmation}
+    \end{subfigure}
+    \caption{Key IV-Conf web pack panels used for day-to-day configuration.}
+\end{figure}
+
+\section{Usage notes}
+In most situations only the configuration panels are required. Firmware updates are handled separately in \autoref{ch:appendix}. When a setting fails to apply, disconnect and reconnect the MODBUS session and ensure that the correct serial port and baud rate are selected.

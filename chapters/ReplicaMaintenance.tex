@@ -1,18 +1,67 @@
 \chapter{Sensor connections}\label{ch:connections}
 
-This chapter summarises the recommended wiring practices for each indicator variant. Detailed diagrams will be added in future revisions; follow the sensor datasheets and vehicle wiring standards in the meantime.
+The following guidance consolidates the wiring notes supplied with the HTML reference. Always verify polarity and connector orientation before applying power.
 
 \section{Voltage monitoring}
-Connect the voltmeter indicator across the vehicle's switched 12~V supply and ground. Ensure the harness includes appropriate fusing and that the indicator shares a common ground reference with other instrumentation.
+Connect the voltmeter indicator to a switched 12~V supply and vehicle ground. Share the ground reference with the rest of the instrumentation and protect the feed with an inline fuse.
 
-\section{Oil pressure (barometer)}
-The barometer indicator uses the VAG \texttt{03C906051A} sensor. Supply it with 5~V and connect the analogue output to the signal input on the indicator harness. Use the \texttt{8K0973703} connector or an equivalent sealed plug.
+\section{Barometer}
+\begin{itemize}
+    \item Sensor: VAG \texttt{03C906051A} supplied with 5~V.
+    \item Connector: \texttt{8K0973703} (female) on the harness.
+    \item Signal: single analogue output routed to the indicator input.
+\end{itemize}
 
-\section{Temperature monitoring}
-The thermometer indicator pairs with an NTC sensor such as Ossca \texttt{01176}. Route both leads to the indicator harness and verify continuity before powering the device. Use \autoref{app:temperature-table} to confirm the sensor is within tolerance.
+\section{Thermometer}
+Use an Ossca\,01176 NTC thermistor or an equivalent part. Route both leads to the indicator harness and confirm resistance against the values listed in \autoref{app:temperature-table} before calibration.
 
-\section{Lambda monitoring}
-Narrowband lambda sensors output 0.1--0.9~V swings that can be fed directly into the indicator. Wideband systems require a dedicated controller (for example SLC Free, DIY-EFI TinyWB, or Sigma Lambda Controller Free~2) that exposes a 0--5~V analogue output. Connect the controller output to the indicator signal input and common ground.
+\section{Lambda}
+IV-Indicators Lambda is intended to work with two probes: the factory narrowband sensor and an additional Bosch LSU~4.9 connected to a wideband controller.
+\begin{itemize}
+    \item Narrowband sensors output 0.1--0.9~V and can be wired directly to the indicator after calibration.
+    \item Wideband controllers (SLC Free, DIY-EFI TinyWB, Sigma Lambda Controller Free~2, and similar) provide a linear 0--5~V output that the indicator can display.
+    \item Retain the stock ECU wiring and feed the controller's analogue output into the IV-Indicators harness.
+\end{itemize}
 
-\section{Boost monitoring}
-The boost indicator expects a Dacia \texttt{223657266R} pressure sensor powered at 5~V. Use a sealed three-pin connector such as Bosch \texttt{1928403966} when the OEM connector is unavailable. Mount the sensor securely and keep the hose length short to minimise response lag.
+\section{Boost}
+\begin{itemize}
+    \item Sensor: Dacia \texttt{223657266R} (\texttt{161B0004}/\texttt{8200225971}).
+    \item Supply: regulated 5~V with a common ground to the indicator.
+    \item Connector: sealed three-pin plug such as Bosch \texttt{1928403966} when the OEM connector is unavailable.
+\end{itemize}
+
+\section{Connection diagrams}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image43.jpg}
+        \caption{Lambda wiring overview}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image10.png}
+        \caption{Example wideband hookup}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image44.jpg}
+        \caption{Controller to LSU~4.9 pinout}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image45.jpg}
+        \caption{IV-Indicator connection detail}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image16.png}
+        \caption{Finished installation example}
+    \end{subfigure}
+    \caption{Reference wiring diagrams supplied with the IV-Indicators Nano HTML manual.}
+\end{figure}
+
+\section{Support}
+PHOL-LABS Kft can assist with the initial connection of the indicators at no charge and offers extended consultation for complex setups. Contact support if custom sensors or additional controllers are being integrated.

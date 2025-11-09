@@ -1,33 +1,60 @@
 \chapter{Typical setup cases}\label{ch:setup-cases}
 
-This section summarises common configuration tasks handled through the IV-Conf web pack or Android app. Always connect to the correct serial port and confirm that \texttt{Connect MODBUS} reports a successful link before applying changes.
+Always establish a stable MODBUS session (no red error banners) before applying any of the following adjustments. The screenshots originate from the IV-Conf web pack but the Android beta offers equivalent controls.
 
-\section{Adjusting colours}
+\section{Colour adjustments}
 \begin{enumerate}
-    \item Press \texttt{Get data} to read the current configuration.
-    \item Modify the hue or gradient settings as required. Text colour previews match the indicator output.
-    \item Adjust the backlight parameters (labelled ``Bl'') to set the background intensity.
-    \item Press \texttt{Send data} and wait until the transfer completes.
+    \item Click \texttt{Get data} to read the current preset.
+    \item Change the hue controls to match the desired display colour. The preview text mirrors the indicator output.
+    \item Adjust the \texttt{Bl} backlight slider to tune the background intensity.
+    \item Press \texttt{Send data} and wait for the transfer to finish.
 \end{enumerate}
 
-\section{Correcting measurement ranges}
-For voltmeter, barometer, boost, or lambda indicators:
+\section{Range calibration}
 \begin{enumerate}
-    \item Press \texttt{Get data} to read the configuration.
-    \item Update \texttt{Range min} and \texttt{Range max} to match the desired display range.
-    \item Press \texttt{Send data} and allow 10--15 seconds for the upload to finish.
+    \item Retrieve the configuration with \texttt{Get data}.
+    \item Update \texttt{Range min} and \texttt{Range max} so the indicator reflects the true sensor span (voltmeter, barometer, lambda, or boost).
+    \item Send the data and verify the live reading against a trusted meter.
 \end{enumerate}
 
-\section{Thermometer calibration}
+\section{Thermometer tuning}
 \begin{enumerate}
-    \item Verify the sensor resistance with a multimeter and compare it to the reference values in \autoref{app:temperature-table}. Replace the sensor if the measurement deviates significantly.
-    \item Press \texttt{Get data} and update the beta coefficient and nominal resistance fields if a custom NTC sensor is used.
-    \item Press \texttt{Send data} to apply the new parameters.
+    \item Measure the sensor resistance with a multimeter and compare it to the values in \autoref{app:temperature-table}. Replace the probe if it falls outside tolerance.
+    \item Use \texttt{Get data} to load the current parameters.
+    \item Enter the appropriate beta coefficient and nominal resistance for the custom NTC sensor.
+    \item Upload the changes with \texttt{Send data}.
 \end{enumerate}
 
-\section{Switching between bar and dot display}
+\section{Switching bar and dot modes}
 \begin{enumerate}
-    \item Press \texttt{Get data}.
-    \item Set the \texttt{Bar mode} flag to 1 for bar display or clear it for dot display.
-    \item Press \texttt{Send data}.
+    \item Fetch the configuration via \texttt{Get data}.
+    \item Set \texttt{Bar mode} to 1 for a bar-style display or clear it for dot indication.
+    \item Press \texttt{Send data} to commit the change.
 \end{enumerate}
+
+\section{Interface highlights}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image29.png}
+        \caption{Gradient and hue editor}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image26.png}
+        \caption{Range calibration fields}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image24.png}
+        \caption{Custom NTC configuration}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image4.png}
+        \caption{Bar mode toggle}
+    \end{subfigure}
+    \caption{Common IV-Conf controls referenced in the setup cases.}
+\end{figure}

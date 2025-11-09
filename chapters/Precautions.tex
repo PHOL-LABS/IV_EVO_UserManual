@@ -1,16 +1,32 @@
 \chapter{Prohibitions and precautions}\label{ch:precautions}
 
-IV-Indicators Nano modules share a common programmer and enclosure design. Misusing the power connection or attaching the programmer while the indicator is live can permanently damage the electronics. Please read the following rules before unpacking the hardware:
+The IV-Indicators Nano programmer is not a standalone accessory; it is part of the indicator electronics. Incorrect handling can immediately destroy the power regulation stage or short exposed pogo pins. Always set the device on an insulating surface and follow the rules below before applying power.
 
+\section{Critical rules}
 \begin{enumerate}
-    \item \textbf{Never power the programmer outside the indicator.} The programmer is an integral part of the gauge. Plugging it into USB without the indicator connected can destroy the electronics.
-    \item \textbf{Do not insert the programmer into a powered indicator.} Always make the mechanical connection first, ensure the programmer and indicator sit firmly in place, and only then apply power.
-    \item \textbf{Do not attach or detach the programmer while it is powered.} Disconnect the USB cable from the phone or computer before unplugging the programmer from the gauge.
-    \item \textbf{Keep the device stable during programming.} Movement can bend the pogo pins and cause shorts. Place the indicator on a non-conductive surface before flashing or configuring it.
-    \item \textbf{Avoid conductive work surfaces.} Laptops, tabletops, or vehicle bodywork can short exposed contacts. Use a clean insulating mat whenever the rear of the indicator is exposed.
-    \item \textbf{Do not rely on temporary success.} The gauge may appear to work when placed on metal, but even a slight movement can short the pins and blow the electronics. Treat this as permanent damage---warranty coverage is void in such cases.
+    \item \textbf{Never power the programmer outside the indicator.} Connecting the programmer to a USB phone or computer without the gauge attached will burn the electronics. Only energise the tool once it is fully seated in the indicator housing.
+    \item \textbf{Do not insert the programmer into a powered indicator.} Make every mechanical connection with the system unpowered. Plug the programmer into the gauge first, verify that it sits straight, and only then connect the USB supply.
+    \item \textbf{Do not attach or detach the programmer while it is live.} Disconnect the USB cable before removing the programmer from the indicator and keep movement to a minimum while data is being transferred.
+    \item \textbf{Secure the gauge during programming.} Wobbling on a desk or dangling from a USB cable can bend pogo pins and cause shorts. Support the device so that the connector cannot shift.
+    \item \textbf{Avoid conductive surfaces.} Laptop cases, vehicle bodywork, or bare metal benches will short the programming contacts even if the system appears to work briefly. Use a clean non-conductive mat at all times.
 \end{enumerate}
 
-\begin{dangerbox}
-    There is no warranty or returns if the device has been powered or programmed in a way that contradicts the rules above. Paid replacements are available from PHOL-LABS Kft if damage occurs.
-\end{dangerbox}
+\begin{quote}
+    \textbf{Warranty notice.} No warranty or returns are available if the indicator was powered or programmed in ways that ignore these prohibitions. PHOL-LABS Kft can supply a replacement, but it will be billed to the customer.
+\end{quote}
+
+\section{Incorrect setups to avoid}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image30.jpg}
+        \caption{Do not leave the programmer hanging while powered.}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image28.png}
+        \caption{Avoid conductive work surfaces under the pogo pins.}
+    \end{subfigure}
+    \caption{Typical misuse scenarios that can destroy the electronics within seconds.}
+\end{figure}
