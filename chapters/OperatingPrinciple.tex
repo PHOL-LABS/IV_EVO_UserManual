@@ -1,17 +1,19 @@
 \chapter{Operating principle}\label{ch:operating-principle}
 
-All IV-Indicators Nano variants share a common architecture. The indicator body houses the display, colour-controllable backlight, and an embedded controller that exposes a four-pin programming port. The supplied programmer bridges this port to USB for Android phones or computers, allowing the firmware to receive configuration updates, presets, and firmware images.
+Every IV-Indicators Nano gauge integrates a segmented display, RGB backlight, and a microcontroller that stores measurement presets. A four-pin pogo connector on the rear mates with the supplied programmer so the indicator can receive firmware updates and configuration profiles from an Android phone or desktop browser.
 
-Each indicator ships with a default preset for its intended sensor:
-
+\section{Measurement presets}
+Each indicator ships with a preset aligned to its intended role:
 \begin{itemize}
-    \item \textbf{Voltmeter} --- measures system voltage directly from the vehicle harness.
-    \item \textbf{Barometer} --- expects a VAG pressure sensor (\texttt{03C906051A}) powered at 5~V with a 0.4--0.5~V nominal output.
-    \item \textbf{Thermometer} --- reads NTC thermistors compatible with Ossca \texttt{01176}; resistance values are listed in \autoref{app:temperature-table}.
-    \item \textbf{Lambda} --- supports narrowband oxygen sensors out of the box and accepts 0--5~V analogue signals from wideband controllers.
-    \item \textbf{Boost} --- interfaces with the Dacia \texttt{223657266R} boost pressure sensor powered at 5~V.
+    \item \textbf{Voltmeter} --- monitors system voltage directly from the vehicle harness.
+    \item \textbf{Barometer} --- targets the VAG 03C906051A pressure sensor running from a regulated 5~V supply.
+    \item \textbf{Thermometer} --- reads NTC thermistors equivalent to the Ossca\,01176 probe listed in \autoref{app:temperature-table}.
+    \item \textbf{Lambda} --- interprets narrowband oxygen sensor signals and accepts linear 0--5~V outputs from wideband controllers.
+    \item \textbf{Boost} --- interfaces with the Dacia 223657266R sensor (also known as 161B0004/8200225971).
 \end{itemize}
 
-The lambda indicator can be paired with dedicated wideband controllers (for example SLC Free, DIY-EFI TinyWB, or Sigma Lambda Controller Free~2) that translate the Bosch LSU~4.9 sensor output to an analogue voltage. Connect the controller to the LSU~4.9 according to its manual and route the linear analogue output (typically 0--5~V or 0.5--4.5~V) to the IV-Indicators Lambda input.
+\section{Configuration workflow}
+Configuration data is pushed over USB by the IV-Conf applications. The Android beta and the web pack both expose colour, gradient, and mode controls so the same hardware can render dot or bar indicators. You can define up to four colour segments, tune backlight intensity, and adjust minimum/maximum measurement ranges to match your sensors. Calibrated values are retained even after the gauge is unplugged, making it easy to experiment without losing a preferred setup.
 
-Sockets differ across sensors. The barometer uses the VAG \texttt{8K0973703} connector, while the recommended boost sensor requires a generic three-pin connector such as Bosch \texttt{1928403966}. When an official connector is unavailable, use sealed automotive-grade plugs and ensure strain relief on the harness.
+\section{Sensor integration}
+The barometer preset expects the OEM VAG \texttt{8K0973703} connector. The boost indicator is supplied without a dedicated harness; a sealed three-pin automotive connector such as the Bosch \texttt{1928403966} is recommended. For lambda monitoring, PHOL-LABS advises pairing the gauge with an external wideband controller (SLC Free, DIY-EFI TinyWB, Sigma Lambda Controller Free~2, or similar) that conditions a Bosch LSU~4.9 probe into a stable analogue voltage. Route the controller's linear output to the gauge input while following the controller manual for heater power and calibration.

@@ -1,13 +1,20 @@
 \chapter{Preparation and installation}\label{ch:preparation}
 
-Before installing an IV-Indicators Nano module, ensure the vehicle and workspace are prepared:
+Set up the workspace before unpacking the indicator. The pogo connector must stay clean and insulated, and the harness should be ready for the required sensor.
 
+\section{Workspace checklist}
 \begin{enumerate}
-    \item Disconnect the negative terminal of the vehicle battery.
-    \item Identify the mounting location and ensure the harness reaches the relevant sensor.
-    \item Complete all mechanical attachments---the indicator must be fixed in its housing before any power is applied.
-    \item Route the sensor harness away from sharp edges and hot components. Use heat-resistant loom or conduit where necessary.
-    \item Verify that the programmer port remains accessible so that future calibration steps can be completed without removing the indicator from the dashboard.
+    \item Disconnect the vehicle battery and place the indicator on a non-conductive mat. Keep metal laptop shells and other conductive objects away from the pogo pins.
+    \item Test-fit the mounting location so the harness can reach the target sensor without strain. Route cables away from sharp edges or high-temperature engine parts.
+    \item Install the socket supplied with the kit and confirm that the programmer can be attached later without removing surrounding trim.
 \end{enumerate}
 
-Only after these steps are complete should the indicator be powered for configuration. Never move the device or unplug connectors while the programmer is energised.
+\section{Preparing the sensor harness}
+\begin{itemize}
+    \item Use the correct connector for the selected preset. The barometer relies on a VAG \texttt{8K0973703} plug, while the boost sensor needs a sealed three-pin connector such as Bosch \texttt{1928403966}.
+    \item When fitting a lambda gauge, plan for two oxygen sensors: the stock narrowband unit for the ECU and a Bosch LSU~4.9 connected to a dedicated controller. Feed the controller's analogue output into the indicator harness.
+    \item Provide strain relief and insulation for every splice. The pogo connector and sensor leads are not designed to flex while the indicator is powered.
+\end{itemize}
+
+\section{Support}
+PHOL-LABS Kft offers a one-time assistance session for wiring questions and provides extended consultations on a paid basis when custom sensor adaptations are required. Contact support before powering the system if any wiring step is unclear.

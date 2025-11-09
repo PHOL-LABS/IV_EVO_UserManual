@@ -1,21 +1,65 @@
 \chapter{Technical specifications}\label{ch:technical-specifications}
 
+\section{Supported sensors}
 \begin{table}[htbp]
     \centering
-    \caption{Sensor characteristics}
+    \caption{Factory presets and compatible sensors}
     \label{tab:sensor-characteristics}
     \begin{tabular}{@{} l l l l @{}}
         \toprule
-        Indicator & Sensor & Supply voltage & Notes \\
+        Indicator & Sensor & Supply & Notes \\
         \midrule
-        Voltmeter & Vehicle harness & 12~V system & Factory-calibrated for visual voltage match. \\
+        Voltmeter & Vehicle harness & 12~V system & Direct measurement of charging voltage. \\
         Barometer & VAG \texttt{03C906051A} & 5~V & 10~bar range, 0.4--0.5~V nominal output, M10\,\texttimes\,1.0 thread. \\
-        Thermometer & Ossca \texttt{01176} (NTC) & Passive & See \autoref{app:temperature-table} for resistance values. \\
-        Lambda & Narrowband O$_2$ sensor & Passive & 0.1--0.9~V swing, calibrate via presets. \\
-        Lambda (with controller) & Bosch LSU~4.9 + wideband controller & 12~V + controller spec & Use analogue controller output (0--5~V typical). \\
-        Boost & Dacia \texttt{223657266R} & 5~V & 20--250~kPa, 1.8~V nominal output, 3-pin connector. \\
+        Thermometer & Ossca \texttt{01176} NTC & Passive & Reference values listed in \autoref{app:temperature-table}. \\
+        Lambda & Narrowband O$_2$ sensor & Passive & 0.1--0.9~V swing, accepts 0--5~V from wideband controllers. \\
+        Boost & Dacia \texttt{223657266R} & 5~V & 20--250~kPa span, 1.8~V nominal output, single mounting bore. \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-All indicators rely on the supplied programmer for configuration. USB-C connectivity is required; use OTG adapters for devices with different ports. The firmware accepts colour, gradient, and backlight adjustments, along with numeric calibration ranges for each sensor input.
+\section{Barometer preset}
+The barometer indicator is designed for the Volkswagen Group pressure sensor \texttt{03C906051A}.
+\begin{itemize}
+    \item Power supply: 5~V regulated.
+    \item Measurement range: 10~bar absolute.
+    \item Nominal analogue output: 0.4--0.5~V at rest.
+    \item Mechanical thread: M10\,\texttimes\,1.0.
+    \item Connector: VAG \texttt{8K0973703}.
+\end{itemize}
+
+\section{Thermometer preset}
+Thermometer presets ship calibrated for the Ossca\,01176 NTC thermistor commonly fitted to Golf~II cooling systems. Use the resistance table in \autoref{app:temperature-table} when validating alternative probes. For custom NTC sensors, update the beta coefficient and nominal resistance through the IV-Conf tools.
+
+\section{Boost preset}
+The boost indicator expects the Dacia \texttt{223657266R} (\texttt{161B0004}/\texttt{8200225971}) sensor.
+\begin{itemize}
+    \item Three-pin connector (use a sealed Bosch \texttt{1928403966} or equivalent).
+    \item Supply voltage: +5~V.
+    \item Operating window: 20--250~kPa.
+    \item Analogue output: approximately +1.8~V at nominal boost.
+\end{itemize}
+
+\section{Lambda integration}
+IV-Indicators Lambda reads narrowband sensors directly but is intended to work alongside a wideband controller for tuned engines. Recommended controllers include SLC Free, DIY-EFI TinyWB, and Sigma Lambda Controller Free~2. Each device converts a Bosch LSU~4.9 probe into a linear 0--5~V signal that the indicator can display.
+
+\section{Sensor reference images}
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image41.jpg}
+        \caption{VAG 03C906051A pressure sensor}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image9.png}
+        \caption{Pinout for the barometer harness}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image42.jpg}
+        \caption{Boost sensor connection example}
+    \end{subfigure}
+    \caption{Reference hardware supplied or recommended for the barometer and boost presets.}
+\end{figure}

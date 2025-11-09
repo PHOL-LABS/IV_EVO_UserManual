@@ -1,12 +1,72 @@
 \chapter{Appendix}\label{ch:appendix}
 
 \section{IV-Conf web pack reflashing}\label{app:reflashing}
+Use the web pack for firmware updates. Complete the steps below without disconnecting power once the transfer begins.
 \begin{enumerate}
-    \item Navigate to \url{https://phol-labs.com/iv} and connect to the indicator as described in \autoref{ch:web-config}.
-    \item After establishing the MODBUS link, press \texttt{Stop Send Data}.
-    \item Click the firmware upload icon, select the firmware file supplied with your indicator, and confirm the action.
-    \item Wait for the transfer to complete and the indicator to reboot. Do not disconnect power during reflashing.
+    \item Open \url{https://phol-labs.com/iv} and connect to the programmer as described in \autoref{ch:web-config}.
+    \item Ensure the baud rate is set to 115200 and click \texttt{Connect MODBUS}. Wait for a green status message.
+    \item Press \texttt{Stop Send Data} to halt any automatic preset uploads.
+    \item Click the firmware icon, choose the update file supplied with your indicator, and confirm the prompt.
+    \item Leave the indicator undisturbed until the progress bar completes and the device restarts.
 \end{enumerate}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image15.png}
+        \caption{Open the web pack}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image11.png}
+        \caption{Select the serial port}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image1.png}
+        \caption{Authorise access}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image8.png}
+        \caption{Set 115200 baud}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image25.png}
+        \caption{Stop active transfers}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image14.png}
+        \caption{Connect MODBUS}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image6.png}
+        \caption{Open the firmware dialog}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image46.png}
+        \caption{Select the update package}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image7.png}
+        \caption{Confirm the upload}
+    \end{subfigure}
+    \par\medskip
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{image12.png}
+        \caption{Wait for completion}
+    \end{subfigure}
+    \caption{Sequence of IV-Conf web pack screens used during firmware reflashing.}
+\end{figure}
 
 \section{Temperature sensor reference}\label{app:temperature-table}
 The following table lists the nominal resistance values for the Ossca \texttt{01176} NTC sensor used with the thermometer preset.
