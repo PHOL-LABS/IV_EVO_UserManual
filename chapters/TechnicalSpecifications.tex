@@ -1,22 +1,33 @@
 \chapter{Technical specifications}\label{ch:technical-specifications}
 
+\usepackage[T1]{fontenc}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
 \section{Supported sensors}
+
 \begin{table}[htbp]
     \centering
     \caption{Factory presets and compatible sensors}
     \label{tab:sensor-characteristics}
-    \begin{tabular}{@{} l l l p{0.45\textwidth} @{}}
+
+    \begin{tabularx}{\textwidth}{@{} l l l X @{}}
         \toprule
         Indicator & Sensor & Supply & Notes \\
         \midrule
         Voltmeter & Vehicle harness & 12~V system & Direct measurement of charging voltage. \\
-        Barometer & VAG \texttt{03C906051A} & 5~V & 10~bar range, 0.4--0.5~V nominal output, M10\,\texttimes\,1.0 thread. \\
-        Thermometer & Ossca \texttt{01176} NTC & Passive & Reference values listed in \autoref{app:temperature-table}. \\
-        Lambda & Narrowband O$_2$ sensor & Passive & 0.1--0.9~V swing, accepts 0--5~V from wideband controllers. \\
-        Boost & Dacia \texttt{223657266R} & 5~V & 20--250~kPa span, 1.8~V nominal output, single mounting bore. \\
+        Barometer & VAG \texttt{03C906051A} & 5~V &
+            10~bar range, 0.4--0.5~V nominal output, M10\,\texttimes\,1.0 thread. \\
+        Thermometer & Ossca \texttt{01176} NTC & Passive &
+            Reference values listed in \autoref{app:temperature-table}. \\
+        Lambda & Narrowband O$_2$ sensor & Passive &
+            0.1--0.9~V swing, accepts 0--5~V from wideband controllers. \\
+        Boost & Dacia \texttt{223657266R} & 5~V &
+            20--250~kPa span, 1.8~V nominal output, single mounting bore. \\
         \bottomrule
-    \end{tabular}
+    \end{tabularx}
 \end{table}
+
 
 \section{Barometer preset}
 The barometer indicator is designed for the Volkswagen Group pressure sensor \texttt{03C906051A}.
