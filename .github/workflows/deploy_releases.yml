@@ -17,10 +17,11 @@ jobs:
         with:
           lfs: true
 
-      - name: Set VERSION from tag or commit
+      - name: Set VERSION from triggering tag
         run: |
-          git fetch --tags
-          VERSION=$(git describe --tags --always --dirty=-dev)
+          # Checkout may store an annotated tag as a commit ref in shallow clones.
+          # Use the triggering tag directly; fetching tags again can refuse to clobber it.
+          VERSION="${GITHUB_REF_NAME}"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Using build version: $VERSION"
 
