@@ -77,7 +77,7 @@ Load them in Lua with require("module") (or via pcall(require, "module") for opt
 \begin{itemize}
 \item display.drawimg(img, x, y)
 \item display.string(font, x, y, text, color)
-\item display.fillrect(x, y, width, height, color)
+\item display.fillrect(x1, y1, x2, y2, color)
 \item display.drawline(x1, y1, x2, y2, color)
 \item display.drawcircle(x, y, r, color)
 \item display.drawfillcircle(x, y, r, color)
@@ -130,12 +130,14 @@ Namespace is backed by NVS partition namespace app.
 \item ble.get\_telemetry() -> rpm, speed, gear
 \end{itemize}
 \section{Example \#1 — Simple voltmeter app}
-The coordinates below fit the 160 by 80 pixel screen, and the bar width is clamped.
+The coordinates below fit the 80 by 160 pixel screen, and the bar width is clamped.
 Below is a minimal app using the same style as existing voltmeter apps (sensor.get(1), font draw, cleanup).
 
 \begin{verbatim}
 local M = {}
-local font = display.loadfont(apppath .. "/../fonts/H24XB.FNT")
+local font = display.loadfont(apppath .. "../fonts/H16XB.FNT")
+
+assert(font, "Font unavailable")
 
 local function read_voltage()
 return sensor.get(1)
@@ -144,11 +146,13 @@ end
 function M.loop()
 local v = read_voltage()
 display.fill(display.BLACK)
-display.string(font, 10, 30,
+display.string(font, 2, 40,
     string.format("%2.1f V", v), display.WHITE)
-display.fillrect(10, 60,
-    math.max(0, math.min(140, math.floor((v - 9.5) * 12))),
-    8, display.GREEN)
+local w = math.max(0,
+    math.min(60, math.floor((v - 9.5) * 12)))
+if w > 0 then
+    display.fillrect(10, 120, 9 + w, 127, display.GREEN)
+end
 display.update()
 end
 

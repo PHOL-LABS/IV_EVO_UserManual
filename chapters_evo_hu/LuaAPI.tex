@@ -16,7 +16,7 @@ A system kezeli a késleltetést, háttérvilágítást, V2 felhúzást, 5 V-os 
 \item display.update()
 \item display.drawimg(img, x, y)
 \item display.string(font, x, y, text, color)
-\item display.fillrect(x, y, width, height, color)
+\item display.fillrect(x1, y1, x2, y2, color)
 \item display.drawline(x1, y1, x2, y2, color)
 \item display.drawcircle(x, y, r, color)
 \item display.drawfillcircle(x, y, r, color)
@@ -61,10 +61,12 @@ A system kezeli a késleltetést, háttérvilágítást, V2 felhúzást, 5 V-os 
 \item ble.get\_telemetry() -> rpm, speed, gear
 \end{itemize}
 \section{Példák és tanácsok}
-A voltmérőpélda a 160\,\texttimes\,80 képpontos területen belüli koordinátákat használ, és korlátozza a sáv szélességét. Az érzékelőpélda ADC-olvasást és simítást mutat, nem teljes NTC-hőmérséklet-számítást: a mintabeli átszámítást valódi kalibrációra kell cserélni. A sensor.get legyen gyors; a kalibráció nvs-ben tárolható, a szöveges értékeket szükség esetén számmá kell alakítani. Az útvonalakat apppath alapján képezze. A DS18B20 keresést egyszer végezze el, majd a ciklusban olvassa az érzékelőket.
+A voltmérőpélda a 80\,\texttimes\,160 képpontos területen belüli koordinátákat használ, és korlátozza a sáv szélességét. Az érzékelőpélda ADC-olvasást és simítást mutat, nem teljes NTC-hőmérséklet-számítást: a mintabeli átszámítást valódi kalibrációra kell cserélni. A sensor.get legyen gyors; a kalibráció nvs-ben tárolható, a szöveges értékeket szükség esetén számmá kell alakítani. Az útvonalakat apppath alapján képezze. A DS18B20 keresést egyszer végezze el, majd a ciklusban olvassa az érzékelőket.
 \begin{verbatim}
 local M = {}
-local font = display.loadfont(apppath .. "/../fonts/H24XB.FNT")
+local font = display.loadfont(apppath .. "../fonts/H16XB.FNT")
+
+assert(font, "Font unavailable")
 
 local function read_voltage()
 return sensor.get(1)
@@ -73,11 +75,13 @@ end
 function M.loop()
 local v = read_voltage()
 display.fill(display.BLACK)
-display.string(font, 10, 30,
+display.string(font, 2, 40,
     string.format("%2.1f V", v), display.WHITE)
-display.fillrect(10, 60,
-    math.max(0, math.min(140, math.floor((v - 9.5) * 12))),
-    8, display.GREEN)
+local w = math.max(0,
+    math.min(60, math.floor((v - 9.5) * 12)))
+if w > 0 then
+    display.fillrect(10, 120, 9 + w, 127, display.GREEN)
+end
 display.update()
 end
 
