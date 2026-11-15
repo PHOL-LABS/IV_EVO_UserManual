@@ -28,43 +28,43 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: IV_Indicators_User_Manual.tex
-          texlive_version: 2025
-          extra_system_packages: coreutils icu inkscape
+          # latex-action v3 maps version 2025 to latest; pin the tested image.
+          docker_image: ghcr.io/xu-cheng/texlive-historic-debian@sha256:d3e42adc0c8d84bc913bfc33571feaf7037616260a771bb6f027504661568bf6
 
       - name: Build German manual
         uses: xu-cheng/latex-action@v3
         with:
           root_file: IV_Indicators_User_Manual_de.tex
-          texlive_version: 2025
-          extra_system_packages: coreutils icu inkscape
+          # latex-action v3 maps version 2025 to latest; pin the tested image.
+          docker_image: ghcr.io/xu-cheng/texlive-historic-debian@sha256:d3e42adc0c8d84bc913bfc33571feaf7037616260a771bb6f027504661568bf6
 
       - name: Build Spanish manual
         uses: xu-cheng/latex-action@v3
         with:
           root_file: IV_Indicators_User_Manual_es.tex
-          texlive_version: 2025
-          extra_system_packages: coreutils icu inkscape
+          # latex-action v3 maps version 2025 to latest; pin the tested image.
+          docker_image: ghcr.io/xu-cheng/texlive-historic-debian@sha256:d3e42adc0c8d84bc913bfc33571feaf7037616260a771bb6f027504661568bf6
 
       - name: Build French manual
         uses: xu-cheng/latex-action@v3
         with:
           root_file: IV_Indicators_User_Manual_fr.tex
-          texlive_version: 2025
-          extra_system_packages: coreutils icu inkscape
+          # latex-action v3 maps version 2025 to latest; pin the tested image.
+          docker_image: ghcr.io/xu-cheng/texlive-historic-debian@sha256:d3e42adc0c8d84bc913bfc33571feaf7037616260a771bb6f027504661568bf6
 
       - name: Build Hungarian manual
         uses: xu-cheng/latex-action@v3
         with:
           root_file: IV_Indicators_User_Manual_hu.tex
-          texlive_version: 2025
-          extra_system_packages: coreutils icu inkscape
+          # latex-action v3 maps version 2025 to latest; pin the tested image.
+          docker_image: ghcr.io/xu-cheng/texlive-historic-debian@sha256:d3e42adc0c8d84bc913bfc33571feaf7037616260a771bb6f027504661568bf6
 
       - name: Build Russian manual
         uses: xu-cheng/latex-action@v3
         with:
           root_file: IV_Indicators_User_Manual_ru.tex
-          texlive_version: 2025
-          extra_system_packages: coreutils icu inkscape
+          # latex-action v3 maps version 2025 to latest; pin the tested image.
+          docker_image: ghcr.io/xu-cheng/texlive-historic-debian@sha256:d3e42adc0c8d84bc913bfc33571feaf7037616260a771bb6f027504661568bf6
 
       - name: Create GitHub Release
         id: create_release
