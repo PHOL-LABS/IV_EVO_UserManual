@@ -10,7 +10,7 @@ Use TeX Live 2025 with latexmk and biber:
 latexmk IV_Evo_User_Manual
 ```
 
-This produces `IV_Evo_User_Manual.pdf`. Add `_de`, `_es`, `_fr`, `_hu` or `_ru` to the target for a localized edition (for example, `latexmk IV_Evo_User_Manual_hu`). The original `IV_Indicators_User_Manual` entry points, with the same language suffixes, build the corresponding Evo editions and preserve existing CI/release artifact names. Build sequentially: aliases share chapter auxiliary files. All CI and release builds pin TeX Live 2025.
+This produces `IV_Evo_User_Manual.pdf`. Add `_de`, `_es`, `_fr`, `_hu` or `_ru` to the target for a localized edition (for example, `latexmk IV_Evo_User_Manual_hu`). The original `IV_Indicators_User_Manual` entry points, with the same language suffixes, build the corresponding Evo editions and preserve existing CI/release artifact names. Build sequentially: aliases share chapter auxiliary files. All CI and release builds pin the exact historical TeX Live 2025 image digest. `latex-action@v3` maps `texlive_version: 2025` to `latest`, so the workflows use `docker_image` instead. Raster-only manuals need no additional Alpine packages in the Debian image.
 
 In the prepared cloud environment, use the retained TeX Live container:
 
