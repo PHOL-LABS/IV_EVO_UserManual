@@ -32,9 +32,9 @@ Host TeX lacks required packages. The full TeX Live 2026 image tested during set
 - `iv_evo_reference/IVEVOUserManual.html` and its `images/`: unchanged source documentation for traceability. Open the HTML locally with its images beside it.
 - `preamble/` and `frontmatter/`: shared layout and title page; Evo branding is enabled by the English entry point.
 
-The English manual replaces the Nano Android/IV-Conf workflow with Evo Wi-Fi setup, covers BLE gear telemetry and Digifiz Next 1.0.14+, and includes the Lua runtime and module API. Its example display coordinates are adjusted for the stated screen dimensions and its bar width is clamped.
+The English manual replaces the Nano Android/IV-Conf workflow with Evo Wi-Fi setup, covers BLE gear telemetry and Digifiz Next 1.0.14+, and includes the Lua runtime and module API. The Lua examples use the firmware’s 80×160 portrait coordinates, inclusive rectangle corners, an included 16-pixel font and clamped bar width.
 
-The supplied text leaves RPM calibration units, the boost transfer curve, general electrical limits unspecified. The manual identifies these gaps instead of importing Nano values. The illustrated pinout is transcribed from the supplied board photograph. Package contents follow the explicit package list (indicator and wired KF2510 socket), rather than an inconsistent marketing reference to an included programmer.
+The supplied text leaves RPM calibration units and general electrical limits unspecified. The firmware scripts contain oil/boost calibration assumptions, which are documented as script-specific rather than universal sensor specifications. The manual identifies these gaps instead of importing Nano values. The illustrated pinout is transcribed from the supplied board photograph. Package contents follow the explicit package list (indicator and wired KF2510 socket), rather than an inconsistent marketing reference to an included programmer.
 
 ## Archived Nano material
 
@@ -43,3 +43,7 @@ The old `chapters/`, `chapters_de/`, `chapters_es/`, `chapters_fr/`, `chapters_h
 ## License
 
 Documentation is released under CC0 1.0; see `LICENSE`. Product and vehicle trademarks remain the property of their respective owners.
+
+## Firmware integration
+
+All six editions include a firmware controls/update chapter reviewed against [`Sgw32/iv-evo-fw` revision 3260783532b3](https://github.com/Sgw32/iv-evo-fw/tree/3260783532b3d4ad8529b23f4e907c0a6ab03262). It covers setup-button behavior, Wi-Fi/BLE mode selection, app and sensor paths, reloads, NTC settings, file backup and tar updates, along with source-specific calibration and API caveats. It takes precedence over the retained historical HTML recipes for that revision. See [the source audit](docs/FIRMWARE_SOURCES.md) for evidence and limitations. Firmware source files are not copied or modified; this is a manual update, not a claim of hardware testing.

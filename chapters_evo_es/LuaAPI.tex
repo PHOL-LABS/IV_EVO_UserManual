@@ -16,7 +16,7 @@ system controla retardo, retroiluminación, pull-up de V2, salida de 5 V y suspe
 \item display.update()
 \item display.drawimg(img, x, y)
 \item display.string(font, x, y, text, color)
-\item display.fillrect(x, y, width, height, color)
+\item display.fillrect(x1, y1, x2, y2, color)
 \item display.drawline(x1, y1, x2, y2, color)
 \item display.drawcircle(x, y, r, color)
 \item display.drawfillcircle(x, y, r, color)
@@ -61,10 +61,12 @@ system controla retardo, retroiluminación, pull-up de V2, salida de 5 V y suspe
 \item ble.get\_telemetry() -> rpm, speed, gear
 \end{itemize}
 \section{Ejemplos y recomendaciones}
-El ejemplo de voltímetro usa coordenadas dentro de 160\,\texttimes\,80 píxeles y limita la anchura de la barra. El ejemplo de sensor muestra lectura ADC y suavizado, no una conversión NTC completa: sustituya la transformación ilustrativa por la calibración real. Mantenga sensor.get rápido; guarde calibraciones con nvs y convierta las cadenas a números cuando proceda. Construya rutas a partir de apppath. Busque DS18B20 una vez y después léalos en el bucle.
+El ejemplo de voltímetro usa coordenadas dentro de 80\,\texttimes\,160 píxeles y limita la anchura de la barra. El ejemplo de sensor muestra lectura ADC y suavizado, no una conversión NTC completa: sustituya la transformación ilustrativa por la calibración real. Mantenga sensor.get rápido; guarde calibraciones con nvs y convierta las cadenas a números cuando proceda. Construya rutas a partir de apppath. Busque DS18B20 una vez y después léalos en el bucle.
 \begin{verbatim}
 local M = {}
-local font = display.loadfont(apppath .. "/../fonts/H24XB.FNT")
+local font = display.loadfont(apppath .. "../fonts/H16XB.FNT")
+
+assert(font, "Font unavailable")
 
 local function read_voltage()
 return sensor.get(1)
@@ -73,11 +75,13 @@ end
 function M.loop()
 local v = read_voltage()
 display.fill(display.BLACK)
-display.string(font, 10, 30,
+display.string(font, 2, 40,
     string.format("%2.1f V", v), display.WHITE)
-display.fillrect(10, 60,
-    math.max(0, math.min(140, math.floor((v - 9.5) * 12))),
-    8, display.GREEN)
+local w = math.max(0,
+    math.min(60, math.floor((v - 9.5) * 12)))
+if w > 0 then
+    display.fillrect(10, 120, 9 + w, 127, display.GREEN)
+end
 display.update()
 end
 

@@ -1,0 +1,58 @@
+\chapter{Firmware-kezelés és frissítés}\label{ch:firmware}
+\section{Forrásverzió és képernyő-koordináták}
+Ez a fejezet a firmware 3260783532b3 revíziójának ellenőrzésén alapul. A telepített verzió eltérhet. A 160-szor-80-as panelt ez a firmware álló koordinátákkal kezeli: szélesség 80, magasság 160, x=0–79 és y=0–159. A GPIO-számok a mikrovezérlő jelei, nem a hétpólusú csatlakozó érintkezőszámai. A szoftveres értékek nem határozzák meg a biztonságos elektromos bemeneti határokat.
+
+\section{Belépés a beállításba és kilépés}
+Bekapcsolás közben tartsa nyomva a hátoldali gombot; a firmware induláskor mintavételezi az állapotát. Működés közben körülbelül 10 másodperces nyomva tartás újraindítja a készüléket; a beállításba lépéshez az indulás alatt is tartsa nyomva. Az alapértelmezett hozzáférési pont neve \nolinkurl{IVEVO_AP}, jelszava 1234567890. A Wi-Fi-beállítás oldala \nolinkurl{/wifi}. Kliensmódban a router által kiosztott címet használja, ne feltételezze a 192.168.4.1 címet.
+
+A \nolinkurl{wifi_c_en} beállítás fenntartja a \nolinkurl{Wi-Fi-/szerverm}ódot; fordításkori alapértéke 0. A \nolinkurl{show_qr} és \nolinkurl{ftp_en} alapértéke is 0. A firmware nagyjából ötpercenként ellenőriz, és kikapcsolja a Wi-Fi-t, ha az AP-hoz nincs kliens csatlakoztatva vagy a klienskapcsolat megszakadt. A normál indítás a beállítási hálózatot nem indító ágban inicializálja a DigifizBLE klienst. BLE-fokozatadatokhoz lépjen ki a beállításból, és indítson normálisan; az elmentett \nolinkurl{ble_en} önmagában nem igazol BLE-kapcsolatot.
+
+\section{Alkalmazások és beállítások}
+A webes felület külön alkalmazás- és érzékelőválasztót tartalmaz. Mindkét választást mentse. A Reload a \nolinkurl{/api/reload_lua_app} végpontot hívja; az újraindítás szintén betölti a mentett választást. Nyomva tartott gombbal indulva a normál Lua-feladat nem indul el, így ebben a módban az újratöltés nem helyettesíti a normál újraindítást.
+
+Az útvonalak szövegként tárolódnak: lua névtér, app kulcs, például \nolinkurl{/root/app/volt_minimal/app.lua}; valamint sensor kulcs, például \nolinkurl{/root/sensor/t_ntc.lua}. Csak a készüléken valóban létező fájlokat válasszon. A jelenlegi forrásban például \nolinkurl{volt_evo_v_l}, \nolinkurl{volt_iv_evo_t}, \nolinkurl{gear_iv_evo_norev} és \nolinkurl{iv_check} mappa szerepel; a régebbi HTML-nevek nem garantálják az aktuális kínálatot. A hátramenet nélküli változatról ne feltételezze, hogy hátramenetet jelez.
+
+A háttérvilágítás 0–100 százalékos. A haladó NVS-szerkesztő szöveges értékeket ír. Az \nolinkurl{ntc_b} alapértéke 3950, az \nolinkurl{ntc_r0} értéke 1000 ohm 25 °C-on; a \nolinkurl{t_ntc.lua} ezeket betöltéskor olvassa, ezért módosítás után töltsön újra vagy indítson újra. Ezek nem kalibrálnak automatikusan minden érzékelőt. Az időszerkesztő a \nolinkurl{/time} útvonalon a futó rendszerórát állítja, nem biztosít elemes időmegőrzést.
+
+\section{Fájlkezelő és frissítések}
+A LittleFS a \nolinkurl{/root} alatt csatolódik. Az alkalmazás rendszerint \nolinkurl{/root/app/<name>/app.lua} helyen van a betűkészletekkel és képekkel; az érzékelőszkriptek a \nolinkurl{/root/sensor} alatt találhatók. Töltse fel az app.lua fájlt és minden szükséges erőforrást a megfelelő mappába, majd mentse az alkalmazás és az érzékelő kiválasztását. A tárhely cseréje előtt a letöltés funkcióval mentse a saját fájljait.
+
+Webes frissítéshez lépjen AP-beállítási módba, és nyissa meg a http:\nolinkurl{//192.168.4.1} címet. A frissítőűrlap manifest.json fájlt és a hivatkozott binárisokat tartalmazó .tar csomagot fogad; a megfelelő IV-Evo-hardverhez készült csomagot használja. A firmware-tároló \nolinkurl{create_update.py} --auto parancsa a \nolinkurl{build/iv-evo-fw.bin} és \nolinkurl{build/storage.bin} fájlokat csomagolja. A jelenlegi böngészős feltöltő rögzítetten a 192.168.4.1 címet használja akkor is, ha az oldalt más címen nyitotta meg. Várja meg a befejezést jelző üzenetet, majd indítson újra. Írás közben biztosítson stabil tápellátást, és tartsa be az egyidejű \nolinkurl{USB-/j}árműtáp tiltását.
+
+A tárhelykép a teljes LittleFS-partíciót lecseréli, így törölheti az oda feltöltött alkalmazásokat, betűkészleteket és beállításfájlokat. Az NVS külön partíció, de nem garantálható minden frissítésnél az összes beállítás megőrzése és kompatibilitása. A projekt két, egyenként 1440 KiB-os OTA-alkalmazáspartíciót és 1 MiB-os tárhelypartíciót definiál. Egyedi fájlok feltöltése nem cseréli a teljes partíciót. A firmware és a tárhely frissítése külön művelet.
+
+\section{Lua-részletek és hibakeresés}
+A \nolinkurl{system.adc_ch} a 0 és 1 indexet fogadja, nem csatlakozó- vagy GPIO-számokat. Kalibrált ADC-adatokat ad vissza, 6,32 szorzóval voltra skálázva. Ne számolja át újra nyers ADC-értékként. A kötés önmagában nem alkalmazza a tárolt csatorna- vagy globális kalibrációs együtthatókat; az alkalmazások és szkriptek döntik el, mely beállításokat használják. A \nolinkurl{V2_pullup}, out5V és \nolinkurl{config_sleep} hívásokhoz 0 vagy 1 egész értéket adjon. A display modul színeket exportál, WIDTH és HEIGHT állandót nem. A \nolinkurl{config_sleep} egy felügyeleti jelzőt állít; a tényleges \nolinkurl{go_sleep} hívás ebben a revízióban ki van kommentezve, így az alacsony fogyasztású működés nem igazolt.
+
+A display.fillrect(x1, y1, x2, y2, color) ebben a revízióban két sarok befoglaló koordinátáit használja, a kötés helyi width és height paraméternevei ellenére. A példák rögzített határokat és a tárolóban meglévő betűkészletet használnak. Az apppath végén már van perjel. A Lua NVS-hozzáférés az app névtérre és szövegekre korlátozott; számok olvasásához használjon tonumber hívást. A DS18B20 indexei nullától indulnak: egyszer keressen, majd a darabszámnál kisebb indexeket olvassa.
+
+A mellékelt \nolinkurl{oil_bar.lua} a 0,5–2,09 V tartományt 0–4 barra képezi, és korlátozza az eredményt; ez a szkript kalibrációja, nem általános érzékelőtartomány. A boost.lua 1,8–4,5 V-ot és 1,013–2,5 bar végpontokat használ, miközben egy megjegyzés más alsó nyomásértéket ad meg. Használat előtt ellenőrizze az érzékelőt és a nyomás viszonyítását. Az \nolinkurl{iv_check} a globális korrekció utáni sensor.get(1) értéket 4 V-tal hasonlítja össze; a HTML 12 \nolinkurl{V/0} V állapotai bekötési példát jelentenek, nem a pontos kapcsolási küszöböt.
+
+Ebben a forrásverzióban a volts1.lua a \nolinkurl{system.V1_pullup} függvényt hívja, amelyet a system modul nem regisztrál. A display.WIDTH vagy display.HEIGHT értéket használó alkalmazások szintén nem exportált állandót kérnek. Betöltési hibánál ellenőrizze a szkriptek és a firmware összeillőségét, ne feltételezze a régi kiválasztási recept működését. A hibakeresési mód naplót, NVS-t és rendszerstatisztikát mutat; a napló végpontja \nolinkurl{/api/log}. Az alap- és tartalék alkalmazás útvonala \nolinkurl{/root/app/app1/app.lua} és \nolinkurl{/root/app/fallback.lua}, de ez nem garantál helyreállást minden szkripthibából. Ezek forrásellenőrzésből származó megállapítások, nem hardvertesztek eredményei.
+
+\section{Firmware-forráshivatkozások}
+\href{https://github.com/Sgw32/iv-evo-fw/tree/3260783532b3d4ad8529b23f4e907c0a6ab03262}{Sgw32/iv-evo-fw, \texttt{3260783532b3}}
+\begin{itemize}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/main.c}{\nolinkurl{main/main.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/hw_setup.h}{\nolinkurl{main/hw_setup.h}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/system/hal.c}{\nolinkurl{main/system/hal.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/system/hal.h}{\nolinkurl{main/system/hal.h}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/system/system_binding.c}{\nolinkurl{main/system/system_binding.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/display/display_binding.c}{\nolinkurl{main/display/display_binding.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/display/st7735s.c}{\nolinkurl{main/display/st7735s.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/interpretator.c}{\nolinkurl{main/interpretator.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/nvs/nvs_binding.c}{\nolinkurl{main/nvs/nvs_binding.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/main/ble/ble_client.c}{\nolinkurl{main/ble/ble_client.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/components/frontend/src/main.js}{\nolinkurl{components/frontend/src/main.js}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/components/backend/backend.c}{\nolinkurl{components/backend/backend.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/components/ota/ota.c}{\nolinkurl{components/ota/ota.c}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/create_update.py}{\nolinkurl{create_update.py}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/partitions.csv}{\nolinkurl{partitions.csv}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/sdkconfig}{\nolinkurl{sdkconfig}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/flash_data/sensor/volts1.lua}{\nolinkurl{flash_data/sensor/volts1.lua}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/flash_data/sensor/t_ntc.lua}{\nolinkurl{flash_data/sensor/t_ntc.lua}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/flash_data/sensor/t_v_ds18b20.lua}{\nolinkurl{flash_data/sensor/t_v_ds18b20.lua}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/flash_data/sensor/oil_bar.lua}{\nolinkurl{flash_data/sensor/oil_bar.lua}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/flash_data/sensor/boost.lua}{\nolinkurl{flash_data/sensor/boost.lua}}
+\item \href{https://github.com/Sgw32/iv-evo-fw/blob/3260783532b3d4ad8529b23f4e907c0a6ab03262/flash_data/app/iv_check/app.lua}{\nolinkurl{flash_data/app/iv_check/app.lua}}
+\end{itemize}
